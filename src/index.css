@@ -1,0 +1,11 @@
+@import "tailwindcss";
+/* Custom override for the Calendar component */
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #2563eb;
+  --rdp-background-color: #eff6ff;
+  margin: 0;
+}
+.rdp-day_selected:not([disabled]) {
+  background-color: var(--rdp-accent-color);
+}
