@@ -4,7 +4,7 @@ import { Features } from "../components/landing/feature/Features";
 
 export default function Welcome() {
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-950 font-sans text-gray-900 dark:text-gray-100 transition-colors duration-300">
       <Navbar />
       <Hero />
       <Features />
