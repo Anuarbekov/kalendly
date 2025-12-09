@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# Kalendly - Open Source Scheduling Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, full-stack scheduling platform clone (similar to Calendly) that allows users to create event types and lets guests book time slots. It syncs directly with Google Calendar to prevent double bookings.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Public Booking Pages:** unique links for different event types (e.g., "30 Min Meeting").
+* **Google Calendar Sync:** Real-time availability checks and automatic event creation with Google Meet links.
+* **Admin Dashboard:** Manage event types, toggle availability, and copy booking links.
+* **Timezone Intelligence:** Automatic timezone detection and conversion for guests.
+* **Dark Mode:** Fully responsive UI with light/dark theme toggle.
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Frontend:**
+* React (Vite)
+* Tailwind CSS (Styling)
+* Lucide React (Icons)
+* Date-fns (Date manipulation)
 
-## Expanding the ESLint configuration
+**[Backend:](https://github.com/Anuarbekov/kalendly-backend)**
+* FastAPI (Python)
+* SQLAlchemy (ORM)
+* Google OAuth2 & Calendar API
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ⚙️ Google OAuth Configuration
+To make the Google Login and Calendar Sync work:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Go to **Google Cloud Console**.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Create a project and enable **Google Calendar API**.
+
+3. Create OAuth 2.0 Credentials (Web Application).
+
+4. **Authorized Javascript Origins**: http://localhost:5173
+
+5. **Authorized Redirect URIs**: http://localhost:5173 and http://localhost:8000/auth/callback (depending on your flow).
+
+## 📂 Project Structure
+
+```
+├── backend/
+│   ├── api/         # API Endpoints (public, auth, event_types)
+│   ├── services/        # Google Calendar logic
+│   ├── models.py        # Database Models
+│   ├── main.py          # Main File
+│   └── schemas.py       # Database Schemas
+├── frontend/
+│   ├── src/
+│   │   ├── components/  # Reusable UI (booking, themeToggle, etc.)
+│   │   ├── pages/       # Dashboard, BookingPage, Welcome
+│   │   ├── contexts/    # ThemeContext
+│   │   └── lib/         # API helpers/utils
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🤝 Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📄 License
+For educational use.
