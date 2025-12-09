@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api } from "../../lib/api";
 import type { TimeSlot } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 interface BookingFormProps {
   currentSlug: string;
@@ -11,6 +12,7 @@ export const BookingForm = ({
   currentSlug,
   selectedSlot,
 }: BookingFormProps) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ name: "", email: "", notes: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,9 +29,11 @@ export const BookingForm = ({
         invitee_note: formData.notes,
       };
 
-      await api.post(`/public/${currentSlug}/book`, payload);
-      alert("Booking Confirmed! Check your email.");
-      window.location.href = "/";
+      const response = await api.post(`/public/${currentSlug}/book`, payload);
+      const data = response.data;
+      navigate("/booking-confirmed", {
+        state: { booking: data },
+      });
     } catch (error: any) {
       console.error("Booking failed", error);
       const msg = error.response?.data?.detail
