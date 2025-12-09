@@ -11,6 +11,7 @@ export interface EventCardProps {
   event: EventType;
   onCopy: (slug: string) => void;
   onToggle: (id: number, currentStatus: boolean) => void;
+  onDelete: (id: number) => void;
 }
 export interface TimeSlot {
   start: string;

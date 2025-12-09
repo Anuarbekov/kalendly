@@ -2,16 +2,30 @@ import { Plus } from "lucide-react";
 import { EventCard } from "../components/EventCard";
 import { useEventTypes } from "../hooks/useEventTypes";
 import { useEventActions } from "../hooks/useEventActions";
+import { CreateEventModal } from "../components/CreateEventModal";
+import { useState } from "react";
 
 export default function Dashboard() {
-  const { events, loading, error, toggleEventStatus } = useEventTypes();
+  const {
+    events,
+    loading,
+    error,
+    toggleEventStatus,
+    createEventType,
+    deleteEventType,
+  } = useEventTypes();
   const { copyEventLink } = useEventActions();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-light text-gray-800">Event Types</h1>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full flex items-center gap-2 transition">
+
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full flex items-center gap-2 transition"
+        >
           <Plus className="w-4 h-4" /> Create Event Type
         </button>
       </div>
@@ -22,7 +36,8 @@ export default function Dashboard() {
             key={event.id}
             event={event}
             onCopy={copyEventLink}
-            onToggle={(id: number) => toggleEventStatus(id, event.is_active)}
+            onToggle={toggleEventStatus}
+            onDelete={deleteEventType}
           />
         ))}
         {loading && (
@@ -31,6 +46,11 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+      <CreateEventModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={createEventType}
+      />
     </div>
   );
 }
