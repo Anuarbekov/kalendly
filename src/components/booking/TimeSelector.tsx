@@ -4,11 +4,7 @@ import { DayPicker } from "react-day-picker";
 import { api } from "../../lib/api";
 import { cn } from "../../lib/utils";
 import "react-day-picker/dist/style.css";
-
-interface TimeSlot {
-  start: string;
-  end: string;
-}
+import type { TimeSlot } from "../../types";
 
 interface TimeSelectorProps {
   currentSlug: string;

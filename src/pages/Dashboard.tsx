@@ -1,62 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
-import { api } from "../lib/api";
 import { Plus } from "lucide-react";
 import { EventCard } from "../components/EventCard";
-export interface EventType {
-  id: number;
-  name: string;
-  slug: string;
-  duration_minutes: number;
-  is_active: boolean;
-  location_type: string;
-  location_value?: string;
-}
+import { useEventTypes } from "../hooks/useEventTypes";
+import { useEventActions } from "../hooks/useEventActions";
 
 export default function Dashboard() {
-  const [events, setEvents] = useState<EventType[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const handleCopyLink = useCallback((slug: string) => {
-    const link = `${window.location.origin}/event/${slug}`;
-    navigator.clipboard.writeText(link);
-    alert("Link copied to clipboard!");
-  }, []);
-
-  const handleToggleActive = useCallback(
-    async (id: number, currentStatus: boolean) => {
-      setEvents(
-        events.map((e) =>
-          e.id === id ? { ...e, is_active: !currentStatus } : e
-        )
-      );
-
-      try {
-      } catch (err) {
-        console.error("Failed to update status");
-        setEvents(
-          events.map((e) =>
-            e.id === id ? { ...e, is_active: currentStatus } : e
-          )
-        );
-      }
-    },
-    []
-  );
-
-  useEffect(() => {
-    const fetchEventTypes = async () => {
-      try {
-        const response = await api.get<EventType[]>("/event-types/");
-        setEvents(response.data);
-      } catch (error) {
-        console.error("Failed to load event types", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEventTypes();
-  }, []);
+  const { events, loading, error, toggleEventStatus } = useEventTypes();
+  const { copyEventLink } = useEventActions();
 
   return (
     <div>
@@ -66,14 +15,14 @@ export default function Dashboard() {
           <Plus className="w-4 h-4" /> Create Event Type
         </button>
       </div>
-
+      {error && <div className="text-red-500 text-center p-10">{error}</div>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map((event) => (
           <EventCard
             key={event.id}
             event={event}
-            onCopy={handleCopyLink}
-            onToggle={handleToggleActive}
+            onCopy={copyEventLink}
+            onToggle={(id: number) => toggleEventStatus(id, event.is_active)}
           />
         ))}
         {loading && (

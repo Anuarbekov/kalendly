@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { api } from "../../lib/api";
-
-interface TimeSlot {
-  start: string;
-  end: string;
-}
+import type { TimeSlot } from "../../types";
 
 interface BookingFormProps {
   currentSlug: string;
