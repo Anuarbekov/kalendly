@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import toast from "react-hot-toast";
 
 export function useEventActions() {
   const copyEventLink = useCallback((slug: string) => {
@@ -7,10 +8,11 @@ export function useEventActions() {
     navigator.clipboard
       .writeText(link)
       .then(() => {
-        alert("Link copied to clipboard!");
+        toast.success("Link copied to clipboard!");
       })
       .catch((err) => {
         console.error("Failed to copy", err);
+        toast.error("Failed to copy link");
       });
   }, []);
 

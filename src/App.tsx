@@ -4,8 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import BookingPage from "./pages/BookingPage";
 import Welcome from "./pages/Welcome";
 import BookingSuccess from "./pages/BookingSuccess";
-
-// --- WRAPPERS ---
+import { Toaster } from "react-hot-toast";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = !!localStorage.getItem("access_token");
@@ -28,6 +27,7 @@ const RedirectIfAuthenticated = ({
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="bottom-center" toastOptions={{ duration: 3000 }} />
       <Routes>
         <Route
           path="/"
