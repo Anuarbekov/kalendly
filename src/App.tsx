@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Dashboard from "./pages/Dashboard";
+import Availability from "./pages/Availability";
 import BookingPage from "./pages/BookingPage";
 import Welcome from "./pages/Welcome";
 import BookingSuccess from "./pages/BookingSuccess";
@@ -38,12 +39,12 @@ function App() {
           }
         />
 
-        {/* Student Flow */}
+        {/* user flow */}
         <Route path="/event/:slug" element={<BookingPage />} />
 
         <Route path="/booking-confirmed" element={<BookingSuccess />} />
 
-        {/* Teacher Flow */}
+        {/* admin flow */}
         <Route
           path="/dashboard"
           element={
@@ -53,6 +54,17 @@ function App() {
           }
         >
           <Route index element={<Dashboard />} />
+        </Route>
+
+        <Route
+          path="/availability"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Availability />} />
         </Route>
 
         <Route
