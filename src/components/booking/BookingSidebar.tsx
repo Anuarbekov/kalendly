@@ -15,6 +15,7 @@ interface BookingSidebarProps {
   selectedSlot: { start: string; end: string } | null;
   showBackButton: boolean;
   onBack: () => void;
+  isLoading: boolean;
 }
 
 export const BookingSidebar = ({
@@ -23,6 +24,7 @@ export const BookingSidebar = ({
   duration,
   selectedSlot,
   showBackButton,
+  isLoading,
   onBack,
 }: BookingSidebarProps) => {
   const formatTime = (isoString: string) =>
@@ -41,7 +43,7 @@ export const BookingSidebar = ({
 
       <h4 className="text-gray-500 font-medium mb-2 flex items-center gap-2">
         <User className="w-4 h-4" />{" "}
-        {hostName ? (
+        {!isLoading ? (
           hostName
         ) : (
           <span className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
@@ -49,7 +51,7 @@ export const BookingSidebar = ({
       </h4>
 
       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 capitalize">
-        {name ? (
+        {!isLoading ? (
           name
         ) : (
           <span className="inline-block h-9 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
@@ -59,7 +61,7 @@ export const BookingSidebar = ({
       <div className="space-y-4 text-gray-600 dark:text-gray-400">
         <div className="flex items-center gap-3">
           <Clock className="w-5 h-5 text-gray-400 dark:text-gray-500" />
-          {duration && duration > 0 ? (
+          {!isLoading ? (
             <span>{duration} min</span>
           ) : (
             <span className="h-5 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>

@@ -12,11 +12,20 @@ export default function BookingPage() {
 
   const { eventDetails, isLoading, error } = useEventDetails(currentSlug);
   const { view, selectedSlot, selectSlot, goBackToCalendar } = useBookingFlow();
-
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-600">
+          Error loading event details: {error.message}
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full flex flex-col md:flex-row overflow-hidden min-h-[600px]">
         <BookingSidebar
+          isLoading={isLoading}
           slug={currentSlug}
           hostName={eventDetails?.host_name || ""}
           name={eventDetails?.name || ""}
