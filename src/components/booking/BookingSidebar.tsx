@@ -27,31 +27,43 @@ export const BookingSidebar = ({
 }: BookingSidebarProps) => {
   const formatTime = (isoString: string) =>
     format(parseISO(isoString), "HH:mm");
-  console.log();
 
   return (
-    <div className="md:w-1/3 bg-white p-8 border-r border-gray-200">
+    <div className="md:w-1/3 bg-white dark:bg-gray-800 p-8 border-r border-gray-200 dark:border-gray-700">
       {showBackButton && (
         <button
           onClick={onBack}
-          className="mb-6 w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50"
+          className="mb-6 w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700"
         >
           <ChevronLeft className="w-5 h-5 text-blue-600" />
         </button>
       )}
 
       <h4 className="text-gray-500 font-medium mb-2 flex items-center gap-2">
-        <User className="w-4 h-4" /> {hostName}
+        <User className="w-4 h-4" />{" "}
+        {hostName ? (
+          hostName
+        ) : (
+          <span className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+        )}
       </h4>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-6 capitalize">
-        {name}
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 capitalize">
+        {name ? (
+          name
+        ) : (
+          <span className="inline-block h-9 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+        )}
       </h1>
 
-      <div className="space-y-4 text-gray-600">
+      <div className="space-y-4 text-gray-600 dark:text-gray-400">
         <div className="flex items-center gap-3">
-          <Clock className="w-5 h-5 text-gray-400" />
-          <span>{duration} min</span>
+          <Clock className="w-5 h-5 text-gray-400 dark:text-gray-500" />
+          {duration && duration > 0 ? (
+            <span>{duration} min</span>
+          ) : (
+            <span className="h-5 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></span>
+          )}
         </div>
 
         {selectedSlot && (
@@ -66,7 +78,7 @@ export const BookingSidebar = ({
         )}
 
         <div className="flex items-center gap-3">
-          <Globe className="w-5 h-5 text-gray-400" />
+          <Globe className="w-5 h-5 text-gray-400 dark:text-gray-500" />
           <span>Asia/Almaty</span>
         </div>
       </div>
