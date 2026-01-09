@@ -27,7 +27,7 @@ const RedirectIfAuthenticated = ({
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/kalendly/">
       <Toaster position="bottom-center" toastOptions={{ duration: 3000 }} />
       <Routes>
         <Route
